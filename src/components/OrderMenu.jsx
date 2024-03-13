@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-function Menu() {
+function OrderMenu() {
   const [data, setData] = useState([]);
-  const [currCat, setCurrCat] = useState("");
+  const [currCat, setCurrCat] = useState("?category=Starter");
   useEffect(() => {
     fetchData(currCat);
   }, [currCat]);
+  const [order, setOrder] = useState([]);
+  const navigate = useNavigate();
 
   async function fetchData() {
     if (currCat === "") return;
@@ -19,15 +22,50 @@ function Menu() {
       alert("Network Error in getting menu details");
     }
   }
-
+  console.log(order);
   const linkStyle = {
     border: "none",
     backgroundColor: "transparent",
     color: "grey",
   };
 
+  async function addToOrder(
+    order_id,
+    menuitem_id,
+    qty,
+    price,
+    image_url,
+    item_name
+  ) {
+    setOrder((prev) => {
+      return [
+        ...prev,
+        { order_id, menuitem_id, qty, price, image_url, item_name },
+      ];
+    });
+  }
+
+  async function placeOrder() {
+    const resProm = order.map(async (item) => {
+      console.log(item);
+      return await axios.post("/trn_order", {
+        ...item,
+        entry_by: 1 || 1,
+        entry_by_role: 5,
+      });
+    });
+
+    const res = await Promise.all(resProm);
+    console.log(res);
+    if (res.length === order.length) {
+      navigate("/profile");
+    } else {
+      alert(`Place Order Again ${res.error}`);
+    }
+  }
+
   return (
-    <section id="menu" className="menu">
+    <section id="menu" className="menu" style={{ marginTop: 10 }}>
       <div className="container" data-aos="fade-up">
         <div className="section-header">
           <h2>Our Menu</h2>
@@ -185,10 +223,19 @@ function Menu() {
               <h3>{currCat.split("=")[1]}</h3>
             </div>
 
+            {/* menu items */}
             <div className="row gy-5">
               {data.map((item, i) => {
                 return (
-                  <div className="col-lg-4 menu-item" key={item.item_name + i}>
+                  <div
+                    className="col-lg-4 menu-item"
+                    key={item.item_name + i}
+                    style={{
+                      border: "1px dashed grey",
+                      borderRadius: 8,
+                      padding: 5,
+                    }}
+                  >
                     <a href="#" className="glightbox">
                       <img
                         src={`http://localhost:8080/images/${item.image_url}`}
@@ -201,130 +248,98 @@ function Menu() {
                       Lorem, deren, trataro, filede, nerada
                     </p> */}
                     <p className="price">&#x20b9;{item.price}</p>
+                    <form
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        const data = new FormData(e.target);
+                        addToOrder(
+                          1,
+                          item.menuitem_id,
+                          +data.get("qty"),
+                          item.price,
+                          item.image_url,
+                          item.item_name
+                        );
+                      }}
+                      role="group"
+                      style={{ width: "70%", height: 63 }}
+                    >
+                      <input
+                        type="number"
+                        name="qty"
+                        min={1}
+                        defaultValue={1}
+                        style={{ padding: 0, margin: 0, minWidth: 50 }}
+                        required
+                      />{" "}
+                      <button style={{ borderRadius: 5 }} type="submit">
+                        &#43;&nbsp;Add&nbsp;to&nbsp;Order
+                      </button>
+                    </form>
                   </div>
                 );
               })}
-
-              {/* if no category selected */}
-              {currCat === "" && (
-                <div class="tab-pane fade active show" id="menu-starters">
-                  <div class="row gy-5">
-                    <div class="col-lg-4 menu-item">
-                      <a
-                        href="assets/img/menu/menu-item-1.png"
-                        class="glightbox"
-                      >
-                        <img
-                          src="assets/img/menu/menu-item-1.png"
-                          class="menu-img img-fluid"
-                          alt=""
-                        />
-                      </a>
-                      <h4>Magnam Tiste</h4>
-                      <p class="ingredients">
-                        Lorem, deren, trataro, filede, nerada
-                      </p>
-                      <p class="price">$5.95</p>
-                    </div>
-
-                    <div class="col-lg-4 menu-item">
-                      <a
-                        href="assets/img/menu/menu-item-2.png"
-                        class="glightbox"
-                      >
-                        <img
-                          src="assets/img/menu/menu-item-2.png"
-                          class="menu-img img-fluid"
-                          alt=""
-                        />
-                      </a>
-                      <h4>Aut Luia</h4>
-                      <p class="ingredients">
-                        Lorem, deren, trataro, filede, nerada
-                      </p>
-                      <p class="price">$14.95</p>
-                    </div>
-
-                    <div class="col-lg-4 menu-item">
-                      <a
-                        href="assets/img/menu/menu-item-3.png"
-                        class="glightbox"
-                      >
-                        <img
-                          src="assets/img/menu/menu-item-3.png"
-                          class="menu-img img-fluid"
-                          alt=""
-                        />
-                      </a>
-                      <h4>Est Eligendi</h4>
-                      <p class="ingredients">
-                        Lorem, deren, trataro, filede, nerada
-                      </p>
-                      <p class="price">$8.95</p>
-                    </div>
-
-                    <div class="col-lg-4 menu-item">
-                      <a
-                        href="assets/img/menu/menu-item-4.png"
-                        class="glightbox"
-                      >
-                        <img
-                          src="assets/img/menu/menu-item-4.png"
-                          class="menu-img img-fluid"
-                          alt=""
-                        />
-                      </a>
-                      <h4>Eos Luibusdam</h4>
-                      <p class="ingredients">
-                        Lorem, deren, trataro, filede, nerada
-                      </p>
-                      <p class="price">$12.95</p>
-                    </div>
-
-                    <div class="col-lg-4 menu-item">
-                      <a
-                        href="assets/img/menu/menu-item-5.png"
-                        class="glightbox"
-                      >
-                        <img
-                          src="assets/img/menu/menu-item-5.png"
-                          class="menu-img img-fluid"
-                          alt=""
-                        />
-                      </a>
-                      <h4>Eos Luibusdam</h4>
-                      <p class="ingredients">
-                        Lorem, deren, trataro, filede, nerada
-                      </p>
-                      <p class="price">$12.95</p>
-                    </div>
-
-                    <div class="col-lg-4 menu-item">
-                      <a
-                        href="assets/img/menu/menu-item-6.png"
-                        class="glightbox"
-                      >
-                        <img
-                          src="assets/img/menu/menu-item-6.png"
-                          class="menu-img img-fluid"
-                          alt=""
-                        />
-                      </a>
-                      <h4>Laboriosam Direva</h4>
-                      <p class="ingredients">
-                        Lorem, deren, trataro, filede, nerada
-                      </p>
-                      <p class="price">$9.95</p>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </div>
+      </div>
+      <br />
+      <br />
+
+      {/* viewing ordered items */}
+      <div style={{ margin: 60, minWidth: "80%" }}>
+        <h3>Whats In My Cart !?</h3>
+        {order.length === 0 && <p>Empty Cart</p>}
+        <div className="row">
+          {order.map((order, i) => {
+            return (
+              <div className="col-lg-2 menu-item" key={order.image_url + i}>
+                <img
+                  src={`http://localhost:8080/images/${order.image_url}`}
+                  className="menu-img img-fluid"
+                  alt=""
+                />
+                <center>
+                  Name : {order.item_name}
+                  <br />
+                  Price : {order.price}
+                  <br />
+                  Quantity : {order.qty}
+                  <br />
+                  <button
+                    style={{
+                      borderRadius: 7,
+                      width: "70%",
+                      fontSize: "small",
+                      padding: 5,
+                    }}
+                    onClick={() => {
+                      setOrder((prev) =>
+                        prev.filter(
+                          (item) => item.menuitem_id !== order.menuitem_id
+                        )
+                      );
+                    }}
+                  >
+                    Remove from Cart
+                  </button>
+                </center>
+              </div>
+            );
+          })}
+        </div>
+        <center>
+          <button
+            disabled={order.length === 0}
+            style={{ borderRadius: 5, margin: 30 }}
+            onClick={placeOrder}
+          >
+            ORDER CART ITEMS &rarr;
+          </button>
+        </center>
       </div>
     </section>
   );
 }
 
-export default Menu;
+export default OrderMenu;

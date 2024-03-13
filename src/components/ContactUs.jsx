@@ -1,6 +1,33 @@
-import React from "react";
+import React, { useRef } from "react";
+import { useForm } from "react-hook-form";
+import axios from "axios";
 
 function ContactUs() {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setError,
+    formState: { errors, isLoading },
+  } = useForm();
+  const model = useRef(null);
+
+  async function handleFormSubmit(formdata) {
+    try {
+      const res = await axios.post("/contact_us", formdata);
+      reset();
+      model.current.showModal();
+      setTimeout(() => {
+        model.current.close();
+      }, 5000);
+    } catch (e) {
+      console.log(e.message);
+      setError("message", {
+        type: "NETWORK",
+        message: "Network Error in submitting your message.",
+      });
+    }
+  }
   return (
     <section id="contact" class="contact">
       <div class="container" data-aos="fade-up">
@@ -61,52 +88,70 @@ function ContactUs() {
           </div>
         </div>
 
+        {/* form */}
         <form
-          action="forms/contact.php"
-          method="post"
-          role="form"
           class="php-email-form p-3 p-md-4"
+          onSubmit={handleSubmit(handleFormSubmit)}
         >
           <div class="row">
             <div class="col-xl-6 form-group">
               <input
+                {...register("name", {
+                  required: "Please Enter Your Name",
+                  maxLength: 100,
+                })}
                 type="text"
-                name="name"
                 class="form-control"
                 id="name"
                 placeholder="Your Name"
-                required
               />
+              {errors?.name?.message ? <p>{errors.name.message}</p> : ""}
             </div>
             <div class="col-xl-6 form-group">
               <input
+                {...register("contact_number", {
+                  required: "Contact Nummber is Required",
+                  pattern: {
+                    value: /[1-9|0]{10}/,
+                    message: "Please Enter Valid Contact",
+                  },
+                  max: 9999999999,
+                  min: 1000000000,
+                })}
                 type="tel"
                 class="form-control"
-                name="contact"
                 id="contact"
                 placeholder="Your Contact"
-                required
               />
+              {errors?.contact_number?.message ? (
+                <p>{errors.contact_number.message}</p>
+              ) : (
+                ""
+              )}
             </div>
           </div>
           <div class="form-group">
             <input
+              {...register("email", {
+                required: "Email is Required",
+              })}
               type="email"
               class="form-control"
-              name="email"
               id="email"
               placeholder="Your Email"
-              required
             />
+            {errors?.email?.message ? <p>{errors.email.message}</p> : ""}
           </div>
           <div class="form-group">
             <textarea
+              {...register("message", {
+                required: "Please Write Your Message down...",
+              })}
               class="form-control"
-              name="message"
               rows="5"
               placeholder="Message"
-              required
             ></textarea>
+            {errors?.message?.message ? <p>{errors.message.message}</p> : ""}
           </div>
           <div class="my-3">
             <div class="loading">Loading</div>
@@ -116,9 +161,21 @@ function ContactUs() {
             </div>
           </div>
           <div class="text-center">
-            <button type="submit">Send Message</button>
+            <button type="submit" disabled={isLoading}>
+              Send Message
+            </button>
           </div>
         </form>
+
+        {/* success message */}
+        <dialog ref={model}>
+          <div>
+            <h1>ThankYou for Contact</h1>
+            <span>
+              <p>We will reach you out soon.</p>
+            </span>
+          </div>
+        </dialog>
       </div>
     </section>
   );
