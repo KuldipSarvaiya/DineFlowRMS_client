@@ -36,7 +36,7 @@ function OrderedMenuItemCard({ order, fetchOrders }) {
               entry_by_role: 5,
             });
             if (res.statusText === "OK") {
-              alert("Menu Item Added to Current Order Successfully")
+              alert("Menu Item Added to Current Order Successfully");
               setQtyMore(1);
               fetchOrders();
             }
@@ -56,6 +56,7 @@ function OrderedMenuItemCard({ order, fetchOrders }) {
           <button style={{ borderRadius: 5 }} type="submit">
             &#43; order {qtyMore} more
           </button>
+          <p>Order Status : {order.order_status}</p>
         </form>
       </header>
     </article>
