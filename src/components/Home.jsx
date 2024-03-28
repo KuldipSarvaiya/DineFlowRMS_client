@@ -169,7 +169,7 @@ function Home() {
                               </p>
                               <h3>Saul Goodman</h3>
                               <h4>Ceo &amp; Founder</h4>
-                              <div class="stars">
+                              <div class="stars" style={{ height: "3rem" }}>
                                 <i class="bi bi-star-fill"></i>
                                 <i class="bi bi-star-fill"></i>
                                 <i class="bi bi-star-fill"></i>

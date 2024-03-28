@@ -80,14 +80,18 @@ function BookTable() {
                 }}
               >
                 <div class="col-lg-8 col-md-8">
+                  <label htmlFor="booking_date">Date of Booking</label>
                   <input
                     {...register("booking_date", {
                       required: "Please enter table booking date",
                       validate: (value) => {
-                        if (new Date(value) < new Date()) return false;
+                        if (new Date(value) >= new Date()) {
+                          return "Invalid Date, Select Date of Upcoming Days";
+                        }
                         return true;
                       },
                     })}
+                    // min={new Date()}
                     type="date"
                     class="form-control"
                     id="date"
@@ -100,9 +104,13 @@ function BookTable() {
                   </div>
                 </div>
                 <div class="col-lg-8 col-md-8">
+                  <label htmlFor="booking_time">Time of Booking</label>
                   <input
                     {...register("booking_time", {
                       required: "please select Time for table reservation",
+                      validate: (v) =>
+                        (v.split(":")[0] <= 22 && v.split(":")[0] >= 8) ||
+                        "Time should be between 8am to 10pm (08:00 to 22:00)",
                     })}
                     type="time"
                     class="form-control"
@@ -117,10 +125,11 @@ function BookTable() {
                   </div>
                 </div>
                 <div class="col-lg-8 col-md-8">
+                  <label htmlFor="person_count">Total Persons</label>
                   <input
                     {...register("person_count", {
                       required:
-                        "Please Enter Count of persons to be arrived at booked table",
+                        "Please Enter No. of persons to be arrived at booked table",
                       min: 1,
                     })}
                     type="number"
@@ -135,17 +144,24 @@ function BookTable() {
                   </div>
                 </div>
                 <div class="col-lg-8 col-md-8">
+                  <label htmlFor="duration">Duration of Stay</label>
                   <input
                     {...register("duration", {
                       required:
                         "Please Enter The duration  of your stay in minutes.",
-                      min: 15,
-                      max: 120,
+                      min: {
+                        value: 15,
+                        message: "Minimum 15 Minutes Duration Allowed",
+                      },
+                      max: {
+                        value: 120,
+                        message: "Maximum 120 Minutes Duration Allowed",
+                      },
                     })}
                     type="number"
                     class="form-control"
                     id="people"
-                    placeholder="Duration to Hold table"
+                    placeholder="Duration to Hold table in Minutes"
                     data-rule="minlen:1"
                     data-msg="Please enter at least 1 chars"
                   />
@@ -155,7 +171,9 @@ function BookTable() {
                 </div>
               </div>
               <div class="text-center" style={{ margin: 10, display: "block" }}>
-                <button type="submit">Book a Table</button>
+                <button type="submit" style={{ width: "300px" }}>
+                  Book a Table
+                </button>
               </div>
             </form>
           </div>

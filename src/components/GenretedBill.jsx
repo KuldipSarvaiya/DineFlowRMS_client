@@ -1,17 +1,21 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { context } from "../AppState";
 
 function GenretedBill() {
   const navigate = useNavigate();
   const { id } = useParams();
+  const [searchParams] = useSearchParams();
   const [data, setData] = useState([]);
   const { appData } = useContext(context);
 
   useEffect(() => {
     fetchData();
   }, []);
+  // queary string
+  const queryParams = Object.fromEntries(searchParams);
+  console.log(queryParams);
 
   async function fetchData() {
     const res = await axios.get("/order/get_bill/" + id);
@@ -34,24 +38,59 @@ function GenretedBill() {
       customer_id: appData?.auth?.customer_id,
       rating,
       entry_by: appData?.auth?.customer_id,
-      entry_by: 5,
+      entry_by_role: 5,
     });
 
-    if(!res?.statusText === "OK") return alert("Your Feedback is not Submited.\nPlease Try again.")
+    if (!res?.statusText === "OK")
+      return alert("Your Feedback is not Submited.\nPlease Try again.");
 
-    if(res?.data?.code === "ER_DUP_ENTRY") return alert("Feedback For This Order is already Submited")
+    if (res?.data?.code === "ER_DUP_ENTRY")
+      return alert("Feedback For This Order is already Submited");
 
     alert("THANK YOU 🎉\nYour Feedback is Submitted Successfully.");
     console.log(res);
   }
 
   return (
-    <section id="book-a-table" class="book-a-table" style={{ marginTop: 10 }}>
+    <section
+      id="book-a-table"
+      class="book-a-table"
+      style={{ width: window.innerWidth - 300, margin: "15px auto" }}
+    >
       <div className="col-12">
         <div className="card recent-sales overflow-auto">
           <div className="card-body">
             <h5 className="card-title">Ordered Menu Items &nbsp;</h5>
 
+            {/* order details */}
+            <hr />
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                gap: "20px",
+                justifyContent: "space-evenly",
+              }}
+            >
+              <span>
+                <b>ORDER ID : </b>
+                {queryParams?.order_id}
+              </span>
+              <span>
+                <b>CUSTOMER NAME : </b>
+                {queryParams?.name}
+              </span>
+              <span>
+                <b>TABLE NO. :</b> {queryParams?.table_no}
+              </span>
+              <span>
+                <b>BILL DATE :</b>{" "}
+                {new Date(queryParams?.bill_date).toLocaleDateString()}
+              </span>
+            </div>
+            <hr />
+
+            {/* table */}
             <table className="table table-borderless datatable" border={2}>
               <thead>
                 <tr>
@@ -91,7 +130,7 @@ function GenretedBill() {
                   <th></th>
                   <th>TOTAL &rarr;</th>
                   <th>SUB TOTAL : {data?.order?.[0]?.sub_total}</th>
-                  <th>CHARGES : {data?.order?.[0]?.charges}</th>
+                  <th>SERVICE CHARGES : {data?.order?.[0]?.charges}</th>
                   <th>DISCOUNT : {data?.order?.[0]?.discount}</th>
                   <th>NET TOTAL : {data?.order?.[0]?.net_total}</th>
                 </tr>

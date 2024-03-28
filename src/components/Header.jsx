@@ -44,13 +44,11 @@ function Header() {
               Book a Table
             </a>
           </Link>
-          {appData?.auth && (
-            <Link to={"/profile"}>
-              <a className="btn-book-a-table" href="#">
-                Account
-              </a>
-            </Link>
-          )}
+          <Link to={appData?.auth ? "/profile" : "/signin"}>
+            <a className="btn-book-a-table" href="#">
+              {appData?.auth ? "Account" : "SignIn"}
+            </a>
+          </Link>
         </span>
         <i className="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
         <i className="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>

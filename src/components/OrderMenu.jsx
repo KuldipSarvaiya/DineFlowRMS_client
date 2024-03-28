@@ -1,16 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { context } from "../AppState";
 
 function OrderMenu() {
   const [data, setData] = useState([]);
   const [currCat, setCurrCat] = useState("?category=Starter");
+  const [currOrder, setCurrOrder] = React.useState([]);
+  const { appData } = useContext(context);
   useEffect(() => {
+    fetchCurrOrder();
     fetchData(currCat);
   }, [currCat]);
   const [order, setOrder] = useState([]);
   const navigate = useNavigate();
 
+  async function fetchCurrOrder() {
+    const res = await axios.get(
+      "/order/my_current_orders/" + appData?.auth?.customer_id
+    );
+    console.log("order my_current_orders = ", res.data);
+    if (res.statusText === "OK") setCurrOrder(res.data);
+  }
+  // alert(currOrder);
   async function fetchData() {
     if (currCat === "") return;
     try {
@@ -253,7 +265,7 @@ function OrderMenu() {
                         e.preventDefault();
                         const data = new FormData(e.target);
                         addToOrder(
-                          1,
+                          currOrder?.[0]?.order_id,
                           item.menuitem_id,
                           +data.get("qty"),
                           item.price,
@@ -330,7 +342,7 @@ function OrderMenu() {
         </div>
         <center>
           <button
-            disabled={order.length === 0}
+            disabled={order.length === 0 || currOrder.length === 0}
             style={{ borderRadius: 5, margin: 30 }}
             onClick={placeOrder}
           >
