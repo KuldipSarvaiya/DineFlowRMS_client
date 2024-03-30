@@ -141,8 +141,8 @@ function Profile() {
                     {item.is_accepted.toUpperCase()}
                   </mark>
                 </p>
-                {new Date(item.booking_date).toDateString() >
-                  new Date().toDateString() && (
+                {new Date(item.booking_date) >
+                  new Date() && (
                   <footer>
                     Cancel Your Booking :{" "}
                     <button

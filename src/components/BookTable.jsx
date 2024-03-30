@@ -84,11 +84,13 @@ function BookTable() {
                   <input
                     {...register("booking_date", {
                       required: "Please enter table booking date",
-                      validate: (value) => {
-                        if (new Date(value) >= new Date()) {
+                      validate: (v) => {
+                        if (
+                          new Date(v) < new Date() ===
+                          (new Date(v).toDateString() !==
+                            new Date().toDateString())
+                        )
                           return "Invalid Date, Select Date of Upcoming Days";
-                        }
-                        return true;
                       },
                     })}
                     // min={new Date()}

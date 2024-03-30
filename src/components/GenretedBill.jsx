@@ -60,7 +60,7 @@ function GenretedBill() {
       <div className="col-12">
         <div className="card recent-sales overflow-auto">
           <div className="card-body">
-            <h5 className="card-title">Ordered Menu Items &nbsp;</h5>
+            <h5 className="card-title">Order Summary &nbsp;</h5>
 
             {/* order details */}
             <hr />
@@ -99,7 +99,7 @@ function GenretedBill() {
                   <th>MENU ITEM NAME</th>
                   <th>CATEGORY</th>
                   <th>PRICE</th>
-                  <th>QUENTITY</th>
+                  <th>QUANTITY</th>
                 </tr>
               </thead>
               <tbody>
