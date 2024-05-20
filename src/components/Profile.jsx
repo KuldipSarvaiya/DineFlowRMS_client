@@ -141,8 +141,7 @@ function Profile() {
                     {item.is_accepted.toUpperCase()}
                   </mark>
                 </p>
-                {new Date(item.booking_date) >
-                  new Date() && (
+                {new Date(item.booking_date) > new Date() && (
                   <footer>
                     Cancel Your Booking :{" "}
                     <button
@@ -168,7 +167,7 @@ function Profile() {
         </summary>
         <p>
           {/* {"Haven't placed any orders yet"} */}
-          {currOrder.length > 0 ? (
+          {currOrder.length > 0 && currOrder[0].allow_orders ? (
             <span
               style={{
                 display: "flex",
