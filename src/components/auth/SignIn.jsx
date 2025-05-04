@@ -106,7 +106,7 @@ function SignIn() {
   return (
     <section
       id="book-a-table"
-      class="book-a-table"
+      className="book-a-table"
       style={{
         marginTop: 60,
         maxWidth: 500,

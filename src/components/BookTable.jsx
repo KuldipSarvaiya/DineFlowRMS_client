@@ -45,32 +45,32 @@ function BookTable() {
   }
 
   return (
-    <section id="book-a-table" class="book-a-table" style={{ marginTop: 10 }}>
-      <div class="container" data-aos="fade-up">
-        <div class="section-header">
+    <section id="book-a-table" className="book-a-table" style={{ marginTop: 10 }}>
+      <div className="container" data-aos="fade-up">
+        <div className="section-header">
           <h2>Book A Table</h2>
           <p>
             Book <span>Your Stay</span> With Us
           </p>
         </div>
 
-        <div class="row g-0">
+        <div className="row g-0">
           <div
-            class="col-lg-4 reservation-img"
+            className="col-lg-4 reservation-img"
             style={{ backgroundImage: "url(assets/img/reservation.jpg)" }}
             data-aos="zoom-out"
             data-aos-delay="200"
           ></div>
 
-          <div class="col-lg-8 d-flex align-items-center reservation-form-bg">
+          <div className="col-lg-8 d-flex align-items-center reservation-form-bg">
             <form
               onSubmit={handleSubmit(handleFormSubmit)}
-              class="php-email-form"
+              className="php-email-form"
               data-aos="fade-up"
               data-aos-delay="100"
             >
               <div
-                class="row gy-4"
+                className="row gy-4"
                 style={{
                   display: "flex",
                   // flexDirection: "column",
@@ -79,7 +79,7 @@ function BookTable() {
                   alignItems: "center",
                 }}
               >
-                <div class="col-lg-8 col-md-8">
+                <div className="col-lg-8 col-md-8">
                   <label htmlFor="booking_date">Date of Booking</label>
                   <input
                     {...register("booking_date", {
@@ -95,17 +95,17 @@ function BookTable() {
                     })}
                     // min={new Date()}
                     type="date"
-                    class="form-control"
+                    className="form-control"
                     id="date"
                     placeholder="Date"
                     data-rule="minlen:4"
                     data-msg="Please enter at least 4 chars"
                   />
-                  <div class="validate" style={{ color: "red" }}>
+                  <div className="validate" style={{ color: "red" }}>
                     {errors?.booking_date?.message}
                   </div>
                 </div>
-                <div class="col-lg-8 col-md-8">
+                <div className="col-lg-8 col-md-8">
                   <label htmlFor="booking_time">Time of Booking</label>
                   <input
                     {...register("booking_time", {
@@ -115,18 +115,18 @@ function BookTable() {
                         "Time should be between 8am to 10pm (08:00 to 22:00)",
                     })}
                     type="time"
-                    class="form-control"
+                    className="form-control"
                     id="time"
                     onChange={(e) => console.log(e.target.value)}
                     placeholder="Time"
                     data-rule="minlen:4"
                     data-msg="Please enter at least 4 chars"
                   />
-                  <div class="validate" style={{ color: "red" }}>
+                  <div className="validate" style={{ color: "red" }}>
                     {errors?.booking_time?.message}
                   </div>
                 </div>
-                <div class="col-lg-8 col-md-8">
+                <div className="col-lg-8 col-md-8">
                   <label htmlFor="person_count">Total Persons</label>
                   <input
                     {...register("person_count", {
@@ -135,17 +135,17 @@ function BookTable() {
                       min: 1,
                     })}
                     type="number"
-                    class="form-control"
+                    className="form-control"
                     id="people"
                     placeholder="# of people"
                     data-rule="minlen:1"
                     data-msg="Please enter at least 1 chars"
                   />
-                  <div class="validate" style={{ color: "red" }}>
+                  <div className="validate" style={{ color: "red" }}>
                     {errors?.person_count?.message}
                   </div>
                 </div>
-                <div class="col-lg-8 col-md-8">
+                <div className="col-lg-8 col-md-8">
                   <label htmlFor="duration">Duration of Stay</label>
                   <input
                     {...register("duration", {
@@ -161,7 +161,7 @@ function BookTable() {
                       },
                     })}
                     type="number"
-                    class="form-control"
+                    className="form-control"
                     id="people"
                     placeholder="Duration to Hold table in Minutes"
                     data-rule="minlen:1"
@@ -172,7 +172,7 @@ function BookTable() {
                   </div>
                 </div>
               </div>
-              <div class="text-center" style={{ margin: 10, display: "block" }}>
+              <div className="text-center" style={{ margin: 10, display: "block" }}>
                 <button type="submit" style={{ width: "300px" }}>
                   Book a Table
                 </button>

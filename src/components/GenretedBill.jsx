@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { context } from "../AppState";
 
 function GenretedBill() {
-  const navigate = useNavigate();
   const { id } = useParams();
   const [searchParams] = useSearchParams();
   const [data, setData] = useState([]);
@@ -54,7 +53,7 @@ function GenretedBill() {
   return (
     <section
       id="book-a-table"
-      class="book-a-table"
+      className="book-a-table"
       style={{ width: window.innerWidth - 300, margin: "15px auto" }}
     >
       <div className="col-12">
@@ -105,7 +104,7 @@ function GenretedBill() {
               <tbody>
                 {data?.trn_orders?.map((item, i) => {
                   return (
-                    <tr>
+                    <tr key={i}>
                       <th>{i + 1}</th>
                       <td>
                         <img
@@ -161,27 +160,27 @@ function GenretedBill() {
                   here...
                 </span>
                 {/* rating */}
-                <div class="star-rating">
-                  <div class="stars">
-                    <label class="number">
+                <div className="star-rating">
+                  <div className="stars">
+                    <label className="number">
                       <input type="radio" name="rating" value="0" />
                     </label>
-                    <label class="star">
+                    <label className="star">
                       <input type="radio" name="rating" value="1" />
                     </label>
-                    <label class="star">
+                    <label className="star">
                       <input type="radio" name="rating" value="2" />
                     </label>
-                    <label class="star">
+                    <label className="star">
                       <input type="radio" name="rating" value="3" checked />
                     </label>
-                    <label class="star">
+                    <label className="star">
                       <input type="radio" name="rating" value="4" />
                     </label>
-                    <label class="star">
+                    <label className="star">
                       <input type="radio" name="rating" value="5" />
                     </label>
-                    <div class="number-rating"></div>
+                    <div className="number-rating"></div>
                   </div>
                 </div>
                 {/* feedback */}

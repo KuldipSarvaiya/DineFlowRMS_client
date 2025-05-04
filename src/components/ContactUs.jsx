@@ -29,16 +29,16 @@ function ContactUs() {
     }
   }
   return (
-    <section id="contact" class="contact">
-      <div class="container" data-aos="fade-up">
-        <div class="section-header">
+    <section id="contact" className="contact">
+      <div className="container" data-aos="fade-up">
+        <div className="section-header">
           <h2>Contact</h2>
           <p>
             Need Help? <span>Contact Us</span>
           </p>
         </div>
 
-        <div class="mb-3">
+        <div className="mb-3">
           <iframe
             style={{ border: 0, width: "100%", height: "350px" }}
             src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621"
@@ -46,37 +46,37 @@ function ContactUs() {
             allowfullscreen
           ></iframe>
         </div>
-        <div class="row gy-4">
-          <div class="col-md-6">
-            <div class="info-item  d-flex align-items-center">
-              <i class="icon bi bi-map flex-shrink-0"></i>
+        <div className="row gy-4">
+          <div className="col-md-6">
+            <div className="info-item  d-flex align-items-center">
+              <i className="icon bi bi-map flex-shrink-0"></i>
               <div>
                 <h3>Our Address</h3>
                 <p>A108 Adam Street, New York, NY 535022</p>
               </div>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="info-item d-flex align-items-center">
-              <i class="icon bi bi-envelope flex-shrink-0"></i>
+          <div className="col-md-6">
+            <div className="info-item d-flex align-items-center">
+              <i className="icon bi bi-envelope flex-shrink-0"></i>
               <div>
                 <h3>Email Us</h3>
                 <p>contact@example.com</p>
               </div>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="info-item  d-flex align-items-center">
-              <i class="icon bi bi-telephone flex-shrink-0"></i>
+          <div className="col-md-6">
+            <div className="info-item  d-flex align-items-center">
+              <i className="icon bi bi-telephone flex-shrink-0"></i>
               <div>
                 <h3>Call Us</h3>
                 <p>+1 5589 55488 55</p>
               </div>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="info-item  d-flex align-items-center">
-              <i class="icon bi bi-share flex-shrink-0"></i>
+          <div className="col-md-6">
+            <div className="info-item  d-flex align-items-center">
+              <i className="icon bi bi-share flex-shrink-0"></i>
               <div>
                 <h3>Opening Hours</h3>
                 <div>
@@ -90,24 +90,24 @@ function ContactUs() {
 
         {/* form */}
         <form
-          class="php-email-form p-3 p-md-4"
+          className="php-email-form p-3 p-md-4"
           onSubmit={handleSubmit(handleFormSubmit)}
         >
-          <div class="row">
-            <div class="col-xl-6 form-group">
+          <div className="row">
+            <div className="col-xl-6 form-group">
               <input
                 {...register("name", {
                   required: "Please Enter Your Name",
                   maxLength: 100,
                 })}
                 type="text"
-                class="form-control"
+                className="form-control"
                 id="name"
                 placeholder="Your Name"
               />
               {errors?.name?.message ? <p>{errors.name.message}</p> : ""}
             </div>
-            <div class="col-xl-6 form-group">
+            <div className="col-xl-6 form-group">
               <input
                 {...register("contact_number", {
                   required: "Contact Nummber is Required",
@@ -119,7 +119,7 @@ function ContactUs() {
                   min: 1000000000,
                 })}
                 type="tel"
-                class="form-control"
+                className="form-control"
                 id="contact"
                 placeholder="Your Contact"
               />
@@ -130,37 +130,37 @@ function ContactUs() {
               )}
             </div>
           </div>
-          <div class="form-group">
+          <div className="form-group">
             <input
               {...register("email", {
                 required: "Email is Required",
               })}
               type="email"
-              class="form-control"
+              className="form-control"
               id="email"
               placeholder="Your Email"
             />
             {errors?.email?.message ? <p>{errors.email.message}</p> : ""}
           </div>
-          <div class="form-group">
+          <div className="form-group">
             <textarea
               {...register("message", {
                 required: "Please Write Your Message down...",
               })}
-              class="form-control"
+              className="form-control"
               rows="5"
               placeholder="Message"
             ></textarea>
             {errors?.message?.message ? <p>{errors.message.message}</p> : ""}
           </div>
-          <div class="my-3">
-            <div class="loading">Loading</div>
-            <div class="error-message"></div>
-            <div class="sent-message">
+          <div className="my-3">
+            <div className="loading">Loading</div>
+            <div className="error-message"></div>
+            <div className="sent-message">
               Your message has been sent. Thank you!
             </div>
           </div>
-          <div class="text-center">
+          <div className="text-center">
             <button type="submit" disabled={isLoading}>
               Send Message
             </button>

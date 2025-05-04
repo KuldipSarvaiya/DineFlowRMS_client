@@ -84,7 +84,7 @@ function Profile() {
   return (
     <section
       id="hero"
-      class="hero"
+      className="hero"
       style={{
         // marginTop: 30,
         maxWidth: 1000,
@@ -97,7 +97,7 @@ function Profile() {
       <details
         style={{ border: "1px dashed grey", borderRadius: 8, padding: 5 }}
       >
-        <summary role="button" class="secondary">
+        <summary role="button" className="secondary">
           My Bookings
         </summary>
         <p
@@ -162,7 +162,7 @@ function Profile() {
       <details
         style={{ border: "1px dashed grey", borderRadius: 8, padding: 5 }}
       >
-        <summary role="button" class="secondary">
+        <summary role="button" className="secondary">
           Menu Orders
         </summary>
         <p>
@@ -210,11 +210,11 @@ function Profile() {
       <details
         style={{ border: "1px dashed grey", borderRadius: 8, padding: 5 }}
       >
-        <summary role="button" class="secondary">
+        <summary role="button" className="secondary">
           Old Orders
         </summary>
         <p>
-          <table class="striped">
+          <table className="striped">
             <thead>
               <tr>
                 <th scope="col">#</th>
